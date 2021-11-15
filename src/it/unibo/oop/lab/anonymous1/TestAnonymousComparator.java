@@ -1,7 +1,6 @@
 package it.unibo.oop.lab.anonymous1;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import it.unibo.oop.lab.socialnetwork.SocialNetworkUser;
 import it.unibo.oop.lab.socialnetwork.SocialNetworkUserImpl;
@@ -64,6 +63,17 @@ public final class TestAnonymousComparator {
         dwashington.addFollowedUser("writers", mgladwell);
         dwashington.addFollowedUser("writers", ntaleb);
         final List<User> denzelUsers = dwashington.getFollowedUsers();
+        
+        final var byAge = new Comparator<User>(){
+        	/**
+        	 * {@inheritDoc}
+        	 */
+        	@Override
+			public int compare(final User o1, final User o2) {
+				return Integer.compare(o1.getAge(), o2.getAge());
+			}
+        };
+        Collections.sort(denzelUsers, byAge);
         /*
          * Order denzel's followed users incrementally by age:
          * 
@@ -97,6 +107,10 @@ public final class TestAnonymousComparator {
         mrossi.addFollowedUser("economists", ntaleb);
         mrossi.addFollowedUser("actors i like", dwashington);
         final List<User> rossiUsers = mrossi.getFollowedUsers();
+        
+        
+        Collections.sort(rossiUsers, byAge.reversed());
+        
         /*
          * Order rossi's followed users by age in decreasing order:
          * 

@@ -4,6 +4,7 @@
 package it.unibo.oop.lab.nesting1;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import it.unibo.oop.lab.socialnetwork.SocialNetworkUserImpl;
@@ -49,16 +50,13 @@ public class SportSocialNetworkUserImpl<U extends User> extends SocialNetworkUse
      */
     public static final Sport BIKE;
 
-    /*
-     * TODO: initialize properly these sports
-     */
-    static {
-        SOCCER = null;
-        F1 = null;
-        MOTOGP = null;
-        VOLLEY = null;
-        BASKET = null;
-        BIKE = null;
+   static {
+        SOCCER = new Sport("Soccer");
+        F1 = new Sport("Formula 1");;
+        MOTOGP = new Sport("Moto GP");
+        VOLLEY = new Sport("Volley");
+        BASKET = new Sport("Basket");
+        BIKE = new Sport("Bike");
     }
 
     /**
@@ -114,7 +112,7 @@ public class SportSocialNetworkUserImpl<U extends User> extends SocialNetworkUse
      */
     // TODO
     public void addSport(final Sport sport) {
-
+    	this.sports.add(sport);
     }
 
     /**
@@ -126,25 +124,56 @@ public class SportSocialNetworkUserImpl<U extends User> extends SocialNetworkUse
      */
     // TODO
     public boolean hasSport(final Sport s) {
-        return false;
+        return this.sports.contains(s);
     }
 
-    /*
-     * TODO
-     * 
-     * Complete the definition of this static inner class defining a Sport along
-     * with its bare name.
+    /**
+     * Represents a sport 
+     *
      */
     public static final class Sport {
-        /*
-         * TODO
+        
+    	private final String sportName;
+    	
+    	/**
+         * Builds a new {@link SportSocialNetworkUserImpl.Sport}.
          * 
-         * Redefine equals so that two sports are equal only if they feature the
-         * very same name. Remember that you must also redefine hashCode()!
+         * @param sportName
+         * 					the sport name
          */
-        @Override
-        public boolean equals(final Object o) {
-            return false;
-        }
+    	public Sport(final String sportName) {
+			this.sportName = sportName;
+    	}
+    	
+    	/**
+    	 * Get the name of the sport
+    	 * 
+    	 * @return a string with name of the sport
+    	 */
+    	public String getName() {
+			return sportName;
+		}
+
+		@Override
+		/**
+		 * Generate hashCode based on the sport name
+		 */
+		public int hashCode() {
+			return Objects.hash(sportName);
+		}
+
+		@Override
+		/**
+		 *  Compare sports
+		 *  
+		 *  @return true if the sports have same name
+		 */
+		public boolean equals(Object obj) {
+			if (obj instanceof Sport) {
+				Sport other = (Sport) obj;
+				return Objects.equals(sportName, other.sportName);
+			}
+			return false;
+		}
     }
 }
